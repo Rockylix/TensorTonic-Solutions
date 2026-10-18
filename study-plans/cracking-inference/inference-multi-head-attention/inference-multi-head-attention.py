@@ -32,17 +32,18 @@ def multi_head_attention(
     # print(query.shape)
 
     # 注意力权重 [batch,numshead,seq_q,seq_k]
-    weight = torch.matmul(query,key.transpose(-1,-2)) / (d**0.5)
-    # print(weight.shape)
+    scores = torch.matmul(query,key.transpose(-1,-2)) / (d**0.5)
+    # print(scores.shape)
     if causal is not False:
-        mask = torch.full_like(weight,True,dtype=bool)
+        mask = torch.full_like(scores,True,dtype=bool)
         mask = torch.triu(mask,diagonal=1)
         print(mask)
-        weight = torch.where(mask,torch.full_like(weight,float("-inf")),weight)
-        # weight = weight.masked_fill(mask,float("-inf"))
+        scores = torch.where(mask,torch.full_like(scores,float("-inf")),scores)
+        # scores = scores.masked_fill(mask,float("-inf"))
 
-    p = torch.softmax(weight,axis = -1)
+    weight = torch.softmax(scores,axis = -1)
     #[batch,numshead,seq,d]
-    H_head = torch.matmul(p,value)
-    Y = H_head.transpose(1,2).reshape(batch,seq,D)
-    return torch.matmul(Y,w_o)
+    attn = torch.matmul(weight,value)
+    # concat = H_head.transpose(1,2).reshape(batch,seq,D)
+    concat = attn.transpose(1,2).contiguous().view(batch,seq,D)
+    return torch.matmul(concat,w_o)
