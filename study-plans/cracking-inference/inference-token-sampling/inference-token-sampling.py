@@ -46,7 +46,7 @@ def sample_next_token(
     #uniform_draws 是一个数， 要扩展
     draws = uniform_draws.unsqueeze(-1)
     sampled = torch.searchsorted(cumulative,draws,right = True).squeeze(-1)
-    return torch.clamp(sampled,0,vocab-1)
+    return torch.clamp(sampled,max = vocab-1)
         
         
     
