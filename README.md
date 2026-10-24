@@ -22,6 +22,7 @@ Verified machine learning implementations completed on [TensorTonic](https://www
 | Problem | Description | Link |
 |---|---|---|
 | Implement Autoregressive Decoding with a KV Cache | Decode autoregressively with an append-only key-value cache so previously processed tokens are never recomputed. | https://www.tensortonic.com/problems/inference-autoregressive-kv-cache |
+| Implement Block-Wise FP8 Quantization | Compute one scale per block from that block's own absolute maximum, and scale each block into the [-fp8 max, fp8 max] range with saturation. | https://www.tensortonic.com/problems/inference-blockwise-fp8-quantization |
 | Implement FlashAttention with Online Softmax | Implement tiled attention with online softmax statistics that agrees numerically with dense scaled attention. | https://www.tensortonic.com/problems/inference-flash-attention-online-softmax |
 | Implement Grouped-Query Attention (GQA) | Implement grouped-query attention by mapping query heads onto fewer key-value heads with validated head divisibility. | https://www.tensortonic.com/problems/inference-grouped-query-attention |
 | Implement Group-Wise INT4 Quantization | Quantize two-dimensional weights in contiguous groups with signed INT4 values and one scale per group. | https://www.tensortonic.com/problems/inference-groupwise-int4-quantization |
